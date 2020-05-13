@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+  <main class="container mt-3">
+    <!-- HERO -->
+    <section class="jumbotron text-center mt-4">
+      <h1 class="display-4">Всякие туры</h1>
+      <p class="lead">{{ subtitle }}</p>
+      <p class="mt-5 w-50 mx-auto">{{ description }}</p>
+    </section>
+
+    <!-- CARDS -->
+    <div class="row mt-5">
+
+{% for tour_id in tours %}{% set tour = tours[tour_id] %} {% set info = [tour.country, departures[tour.departure], tour.nights|string, 'ночей с', tour.date, tour.description]|join(' ') %}
+      <div class="col-4">
+        <div class="card mb-4">
+          <div class="embed-responsive embed-responsive-16by9">
+             <img class="card-img-top embed-responsive-item" src="{{ tour.picture }}" alt="{{ tour.title }}" />
+          </div>          
+          <div class="card-body">
+            <h2 class="h5 card-title">{{ tour.title }}</h2>
+            <p class="card-text">{{ info|truncate(100) }}</p>
+            <a href="/tours/{{ tour_id }}/" class="btn btn-sm btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+{% endfor %}
+
+    </div>
+  </main>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+  <main class="container mt-3">
+    <h1 class="display-5 mt-4">Летим {{ departures[departure][0]|lower }}{{ departures[departure][1:] }}</h1>
+    <p class="mb-4">Найдено {{ tours|count }} туров, от {{ '{0:,}'.format((tours.values()|min(attribute='price'))['price']).replace(',', ' ') }} до {{ '{0:,}'.format((tours.values()|max(attribute='price'))['price']).replace(',', ' ') }} и от {{ (tours.values()|min(attribute='nights'))['nights'] }} ночей до {{ (tours.values()|max(attribute='nights'))['nights'] }} ночей</p>
+
+    <!-- CARDS -->
+    <div class="row mt-5">
+
+{% for tour_id in tours %}{% set tour = tours[tour_id] %} {% set info = [tour.country, tour.nights|string, 'ночей с', tour.date, tour.description]|join(' ') %}
+      <div class="col-4">
+        <div class="card mb-4">
+          <div class="embed-responsive embed-responsive-16by9">
+          <img src="{{ tour.picture }}" class="card-img-top embed-responsive-item" alt="{{ tour.title }}">
+          </div>
+          <div class="card-body">
+            <h2 class="h5 card-title">{{ tour.title }}</h2>
+            <p class="card-text">{{ info|truncate(100) }}</p>
+            <a href="/tours/{{ tour_id }}/" class="btn btn-sm btn-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+{% endfor %}
+
+    </div>
+  </main>
+
+{% endblock %}
