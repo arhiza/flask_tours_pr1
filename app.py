@@ -22,5 +22,5 @@ def show_tour(id):
     return render_template('tour.html', tour=tours[int(id)], title=title, departures=departures)
 
 
-app.run()
-
+if __name__ == '__main__':
+    app.run()
